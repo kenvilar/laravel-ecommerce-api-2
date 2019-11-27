@@ -18,19 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /*Buyers*/
-Route::resource('buyers', 'Buyer\BuyersController', ['only' => ['index', 'show']]);
+Route::resource('buyers', 'Buyer/BuyersController', ['only' => ['index', 'show']]);
 
 /*Category*/
-Route::resource('categories', 'Category/CategoriesController', ['except' => ['create', 'edit']]);
+Route::resource('categories', 'Category\CategoriesController', ['except' => ['create', 'edit']]);
 
 /*Products*/
-Route::resource('products', 'Product/ProductsController', ['only' => ['index', 'show']]);
+Route::resource('products', 'Product\ProductsController', ['only' => ['index', 'show']]);
 
 /*Sellers*/
-Route::resource('sellers', 'Seller/SellersController', ['only' => ['index', 'show']]);
+Route::resource('sellers', 'Seller\SellersController', ['only' => ['index', 'show']]);
 
 /*Transactions*/
-Route::resource('transactions', 'Transaction/TransactionsController', ['only' => ['index', 'show']]);
+Route::resource('transactions', 'Transaction\TransactionsController', ['only' => ['index', 'show']]);
 
 /*Users*/
-Route::resource('users', 'User/UsersController', ['except' => ['create', 'edit']]);
+Route::resource('users', 'User\UsersController', ['except' => ['create', 'edit']]);
