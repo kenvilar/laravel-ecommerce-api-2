@@ -1,6 +1,10 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Transaction;
 use App\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
@@ -29,14 +33,14 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\models\Category::class, function (Faker $faker) {
+$factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph(1),
     ];
 });
 
-$factory->define(\App\Models\Product::class, function (Faker $faker) {
+$factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph(1),
@@ -47,7 +51,7 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\Transaction::class, function (Faker $faker) {
+$factory->define(Transaction::class, function (Faker $faker) {
     $seller = \App\Models\Seller::query()->has('products')->get()->random();
     $buyer = User::all()->except($seller->id)->random();
     return [
