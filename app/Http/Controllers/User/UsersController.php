@@ -41,7 +41,7 @@ class UsersController extends Controller
         $data['verification_token'] = User::generateVerificationCode();
         $data['admin'] = User::REGULAR_USER;
 
-        $user = User::create($data);
+        $user = User::query()->create($data);
 
         return response()->json(['data', $user], 201);
     }
@@ -62,13 +62,51 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::query()->findOrFail($id);
+
+        $rules = [
+            'email' => 'email|unique:users,email,' . $user->id,
+            'password' => 'min:6|confirmed',
+            'admin' => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
+        ];
+
+        $this->validate($request, $rules);
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+
+        if ($request->has('email') && $user->email !== $request->email) {
+            $user->verified = User::UNVERIFIED_USER;
+            $user->verification_token = User::generateVerificationCode();
+            $user->email = $request->email;
+        }
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        if ($request->has('admin')) {
+            if (!$user->isVerified()) {
+                return response()->json(['error' => 'Only verified users can modify the admin field', 'code' => 409], 409);
+            }
+
+            $user->admin = $request->admin;
+        }
+
+        if (!$user->isDirty()) {
+            return response()->json(['error' => 'You need to specify a different value to update', 'code' => 422], 422);
+        }
+
+        $user->save();
+
+        return response()->json(['data' => $user], 200);
     }
 
     /**
