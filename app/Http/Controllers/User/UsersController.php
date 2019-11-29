@@ -117,6 +117,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::query()->findOrFail($id);
+
+        $user->delete();
+
+        return response()->json(['data' => $user], 200);
     }
 }
