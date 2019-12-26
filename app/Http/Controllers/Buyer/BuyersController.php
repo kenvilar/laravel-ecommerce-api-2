@@ -12,7 +12,7 @@ class BuyersController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -24,12 +24,12 @@ class BuyersController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Buyer $buyer
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Buyer $buyer)
     {
-        $buyer = Buyer::query()->has('transactions')->findOrFail($id);
+        /*$buyer = Buyer::query()->has('transactions')->findOrFail($id);*/
 
         return $this->showOne($buyer);
     }
