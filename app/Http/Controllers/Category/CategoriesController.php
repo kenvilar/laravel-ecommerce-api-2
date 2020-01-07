@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Http\Controllers\ApiController;
 use App\Models\Category;
-use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class CategoriesController extends Controller
+class CategoriesController extends ApiController
 {
-    use ApiResponser;
-
     /**
      * Display a listing of the resource.
      *
@@ -21,16 +18,6 @@ class CategoriesController extends Controller
         $categories = Category::all();
 
         return $this->showAll($categories);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -62,17 +49,6 @@ class CategoriesController extends Controller
     public function show(Category $category)
     {
         return $this->showOne($category);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
     }
 
     /**
