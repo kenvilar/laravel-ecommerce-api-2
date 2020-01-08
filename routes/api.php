@@ -31,6 +31,8 @@ Route::resource('sellers', 'Seller\SellersController', ['only' => ['index', 'sho
 
 /*Transactions*/
 Route::resource('transactions', 'Transaction\TransactionsController', ['only' => ['index', 'show']]);
+Route::resource('transactions.categories', 'Transaction\TransactionCategoryController', ['only' => ['index']]);
+Route::resource('transactions.sellers', 'Transaction\TransactionSellerController', ['only' => ['index']]);
 
 /*Users*/
 Route::resource('users', 'User\UsersController', ['except' => ['create', 'edit']]);
