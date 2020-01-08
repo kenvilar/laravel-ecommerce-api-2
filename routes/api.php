@@ -18,21 +18,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /*Buyers*/
-Route::resource('buyers', 'Buyer\BuyersController', ['only' => ['index', 'show']]);
+Route::resource('buyers', 'Buyer\BuyersController', ['only' => ['index', 'show',]]);
+Route::resource('buyers.transactions', 'Buyer\BuyerTransactionController', ['only' => ['index',]]);
+Route::resource('buyers.products', 'Buyer\BuyerProductController', ['only' => ['index',]]);
+Route::resource('buyers.sellers', 'Buyer\BuyerSellerController', ['only' => ['index',]]);
+Route::resource('buyers.categories', 'Buyer\BuyerCategoryController', ['only' => ['index',]]);
 
 /*Category*/
-Route::resource('categories', 'Category\CategoriesController', ['except' => ['create', 'edit']]);
+Route::resource('categories', 'Category\CategoriesController', ['except' => ['create', 'edit',]]);
 
 /*Products*/
-Route::resource('products', 'Product\ProductsController', ['only' => ['index', 'show']]);
+Route::resource('products', 'Product\ProductsController', ['only' => ['index', 'show',]]);
 
 /*Sellers*/
-Route::resource('sellers', 'Seller\SellersController', ['only' => ['index', 'show']]);
+Route::resource('sellers', 'Seller\SellersController', ['only' => ['index', 'show',]]);
 
 /*Transactions*/
-Route::resource('transactions', 'Transaction\TransactionsController', ['only' => ['index', 'show']]);
-Route::resource('transactions.categories', 'Transaction\TransactionCategoryController', ['only' => ['index']]);
-Route::resource('transactions.sellers', 'Transaction\TransactionSellerController', ['only' => ['index']]);
+Route::resource('transactions', 'Transaction\TransactionsController', ['only' => ['index', 'show',]]);
+Route::resource('transactions.categories', 'Transaction\TransactionCategoryController', ['only' => ['index',]]);
+Route::resource('transactions.sellers', 'Transaction\TransactionSellerController', ['only' => ['index',]]);
 
 /*Users*/
 Route::resource('users', 'User\UsersController', ['except' => ['create', 'edit']]);
