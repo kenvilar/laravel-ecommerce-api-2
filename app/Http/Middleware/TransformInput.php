@@ -4,11 +4,13 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class TransformInput
 {
     /**
      * This will avoid the issues between Transformer and Validation on POST, UPDATE methods
+     *
      * Handle an incoming request.
      *
      * @param Request $request
@@ -23,6 +25,21 @@ class TransformInput
             $transformedInput[$transformer::originalAttributes($input)] = $value;
         }
         $request->replace($transformedInput);
-        return $next($request);
+        $response = $next($request);
+
+        if (isset($response->exception) && $response->exception instanceof ValidationException) {
+            $data = $response->getData();
+
+            $transformedErrors = [];
+            foreach ($data->error as $field => $error) {
+                $transformedField = $transformer::transformedAttribute($field);
+                $transformedErrors[$transformedField] = str_replace($field, $transformedField, $error);
+            }
+
+            $data->error = $transformedErrors;
+            $response->setData($data);
+        }
+
+        return $response;
     }
 }
