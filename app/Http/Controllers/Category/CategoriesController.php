@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\ApiController;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CategoriesController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -23,8 +25,9 @@ class CategoriesController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -43,8 +46,8 @@ class CategoriesController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\JsonResponse
+     * @param Category $category
+     * @return JsonResponse
      */
     public function show(Category $category)
     {
@@ -54,9 +57,9 @@ class CategoriesController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @param Category $category
+     * @return JsonResponse
      */
     public function update(Request $request, Category $category)
     {
@@ -77,8 +80,9 @@ class CategoriesController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\JsonResponse
+     * @param Category $category
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function destroy(Category $category)
     {
