@@ -29,7 +29,7 @@ trait ApiResponser
         $collection = $this->filterData($collection, $transformer);
         $collection = $this->sortData($collection, $transformer);
         $collection = $this->paginate($collection);
-        $collection = $this->transformDate($collection, $transformer);
+        $collection = $this->transformData($collection, $transformer);
 
         return $this->successResponse($collection, $code);
     }
@@ -37,7 +37,7 @@ trait ApiResponser
     protected function showOne(Model $instance, $code = 200)
     {
         $transformer = $instance->transformer;
-        $instance = $this->transformDate($instance, $transformer);
+        $instance = $this->transformData($instance, $transformer);
 
         return $this->successResponse($instance, $code);
     }
@@ -93,7 +93,7 @@ trait ApiResponser
         return $paginated;
     }
 
-    protected function transformDate($data, $transformer)
+    protected function transformData($data, $transformer)
     {
         return fractal($data, new $transformer)->toArray();
     }
