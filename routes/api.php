@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,3 +55,5 @@ Route::resource('transactions.sellers', 'Transaction\TransactionSellerController
 Route::resource('users', 'User\UsersController', ['except' => ['create', 'edit']]);
 Route::name('verify')->get('users/verify/{token}', 'User\UsersController@verify');
 Route::name('resend')->get('users/{user}/resend', 'User\UsersController@resend');
+
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');

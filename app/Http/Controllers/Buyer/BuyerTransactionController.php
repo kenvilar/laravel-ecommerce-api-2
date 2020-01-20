@@ -8,6 +8,11 @@ use Illuminate\Http\JsonResponse;
 
 class BuyerTransactionController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +22,7 @@ class BuyerTransactionController extends ApiController
     public function index(Buyer $buyer)
     {
         $transactions = $buyer->transactions;
-    
+
         return $this->showAll($transactions);
     }
 }
