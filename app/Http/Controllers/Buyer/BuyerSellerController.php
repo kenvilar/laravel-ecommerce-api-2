@@ -18,9 +18,12 @@ class BuyerSellerController extends ApiController
      *
      * @param Buyer $buyer
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Buyer $buyer)
     {
+        $this->allowedAdminAction();
+
         $sellers = $buyer->transactions()->with('product.seller')
             ->get()
             ->pluck('product.seller')

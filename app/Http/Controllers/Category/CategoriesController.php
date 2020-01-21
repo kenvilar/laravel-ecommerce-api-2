@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\ApiController;
 use App\Models\Category;
 use App\Transformers\CategoryTransformer;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -36,9 +37,12 @@ class CategoriesController extends ApiController
      * @param Request $request
      * @return JsonResponse
      * @throws ValidationException
+     * @throws AuthorizationException
      */
     public function store(Request $request)
     {
+        $this->allowedAdminAction();
+
         $rules = [
             'name' => 'required',
             'description' => 'required',
@@ -68,9 +72,12 @@ class CategoriesController extends ApiController
      * @param Request $request
      * @param Category $category
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(Request $request, Category $category)
     {
+        $this->allowedAdminAction();
+
         $category->fill($request->only([
             'name',
             'description',
@@ -94,6 +101,8 @@ class CategoriesController extends ApiController
      */
     public function destroy(Category $category)
     {
+        $this->allowedAdminAction();
+
         $category->delete();
 
         return $this->showOne($category);

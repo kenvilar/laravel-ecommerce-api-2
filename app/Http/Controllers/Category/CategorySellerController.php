@@ -18,9 +18,12 @@ class CategorySellerController extends ApiController
      *
      * @param Category $category
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Category $category)
     {
+        $this->allowedAdminAction();
+
         $sellers = $category->products()->with('seller')
             ->get()
             ->pluck('seller')

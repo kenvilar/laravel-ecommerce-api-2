@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\ApiController;
 use App\Models\Seller;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,15 +15,19 @@ class SellersController extends ApiController
     {
         parent::__construct();
         $this->middleware('scope:read-general')->only(['show',]);
+        $this->middleware('can:view,seller')->only('show');
     }
 
     /**
      * Display a listing of the resource.
      *
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $sellers = Seller::query()->has('products')->get();
 
         return $this->showAll($sellers);

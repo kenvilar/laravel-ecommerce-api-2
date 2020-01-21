@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
 use App\Models\Product;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 
 class ProductTransactionController extends ApiController
@@ -18,9 +19,12 @@ class ProductTransactionController extends ApiController
      *
      * @param Product $product
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function index(Product $product)
     {
+        $this->allowedAdminAction();
+
         $transactions = $product->transactions;
 
         return $this->showAll($transactions);

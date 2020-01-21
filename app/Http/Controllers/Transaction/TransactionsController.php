@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transaction;
 
 use App\Http\Controllers\ApiController;
 use App\Models\Transaction;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 
 class TransactionsController extends ApiController
@@ -12,15 +13,19 @@ class TransactionsController extends ApiController
     {
         parent::__construct();
         $this->middleware('scope:read-general')->only('show');
+        $this->middleware('can:view,transaction')->only('show');
     }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws AuthorizationException
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $transactions = Transaction::all();
 
         return $this->showAll($transactions);
