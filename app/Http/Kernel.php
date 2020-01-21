@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \Fruitcake\Cors\HandleCors::class,
             'signature:X-Application-Name',
             'throttle:60,1',
             'bindings',
@@ -60,6 +61,7 @@ class Kernel extends HttpKernel
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'cors' => \Fruitcake\Cors\HandleCors::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
