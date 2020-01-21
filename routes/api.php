@@ -52,6 +52,7 @@ Route::resource('transactions.categories', 'Transaction\TransactionCategoryContr
 Route::resource('transactions.sellers', 'Transaction\TransactionSellerController', ['only' => ['index',]]);
 
 /*Users*/
+Route::name('me')->get('users/me', 'User\UsersController@me');
 Route::resource('users', 'User\UsersController', ['except' => ['create', 'edit']]);
 Route::name('verify')->get('users/verify/{token}', 'User\UsersController@verify');
 Route::name('resend')->get('users/{user}/resend', 'User\UsersController@resend');

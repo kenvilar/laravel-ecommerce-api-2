@@ -148,6 +148,13 @@ class UsersController extends ApiController
         return $this->showOne($user);
     }
 
+    public function me(Request $request)
+    {
+        $user = $request->user();
+
+        return $this->showOne($user);
+    }
+
     public function verify($token)
     {
         $user = User::query()->where('verification_token', $token)->firstOrFail();
